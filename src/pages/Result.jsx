@@ -1,12 +1,15 @@
 import { useLocation } from 'react-router'
 import ResultCard from '../components/result/ResultCard'
+import Loading from '@/components/ui/Loading'
 
 export default function Result() {
   const { state } = useLocation()
+  const loading = !state?.result
 
   if (!state?.result) return null
 
   const { result } = state
+  if (loading) return <Loading />
 
   return (
     <div className="min-h-screen bg-gray-50">

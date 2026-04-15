@@ -7,7 +7,6 @@ export const READINESS_LEVELS = {
   sangat_layak: {
     key: 'sangat_layak',
     label: 'Sangat Layak',
-    emoji: '🌱',
     colorClass: 'text-emerald-600',
     badgeVariant: 'success',
     bgClass: 'bg-emerald-50 border-emerald-200',

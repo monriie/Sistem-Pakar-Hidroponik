@@ -1,60 +1,42 @@
-const FACTOR_LABELS = {
-  alat_dasar       : 'Kelengkapan alat dasar',
-  nutrisi          : 'Kesiapan nutrisi',
-  ph_air           : 'pH air',
-  cahaya           : 'Intensitas cahaya',
-  pestisida        : 'Rencana pengendalian hama',
-  fundamental      : 'Kesiapan fundamental',
-  param_lingkungan : 'Parameter lingkungan',
-}
-
-const STATUS_OK  = new Set(['siap', 'sesuai', 'cukup', 'pakai', 'lengkap', 'sebagian'])
+import { FACTOR_META } from '@/data/result'
 
 export default function RecommendationList({ trace }) {
   if (!trace) return null
 
-  const rows = [
-    { key: 'alat_dasar',       value: trace.input_classified.alat_dasar },
-    { key: 'nutrisi',          value: trace.input_classified.nutrisi },
-    { key: 'fundamental',      value: trace.fundamental.value,       rule: trace.fundamental.firedRule },
-    { key: 'ph_air',           value: trace.input_classified.ph_air },
-    { key: 'cahaya',           value: trace.input_classified.cahaya },
-    { key: 'param_lingkungan', value: trace.param_lingkungan.value,  rule: trace.param_lingkungan.firedRule },
-    { key: 'pestisida',        value: trace.input_classified.pestisida },
+  const items = [
+    { key: 'alat', value: trace.input_classified.alat_dasar },
+    { key: 'nutrisi', value: trace.input_classified.nutrisi },
+    { key: 'ph', value: trace.input_classified.ph_air },
+    { key: 'cahaya', value: trace.input_classified.cahaya },
+    { key: 'pestisida', value: trace.input_classified.pestisida },
   ]
 
+  const recommendations = items
+    .map(({ key, value }) => {
+      const meta = FACTOR_META[key]
+      const text = meta?.recommendations?.[value]
+      return text ? { key, text } : null
+    })
+    .filter(Boolean)
+
+  if (recommendations.length === 0) return null
+
   return (
-    <div className="space-y-2">
-      <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
-        Rincian evaluasi
+    <div className="mt-4 space-y-3">
+      <h3 className="text-sm font-semibold text-[hsl(var(--foreground))]">
+        Rekomendasi Perbaikan
       </h3>
-      {rows.map(({ key, value, rule }) => {
-        const ok = STATUS_OK.has(value)
-        return (
-          <div
-            key={key}
-            className="flex items-center justify-between px-4 py-3
-                       rounded-xl bg-white border border-gray-100"
-          >
-            <div>
-              <p className="text-sm font-medium text-gray-700">
-                {FACTOR_LABELS[key]}
-              </p>
-              {rule && (
-                <p className="text-xs text-gray-400">{rule}</p>
-              )}
-            </div>
-            <span className={`
-              text-xs font-semibold px-2.5 py-1 rounded-full
-              ${ok
-                ? 'bg-green-100 text-green-700'
-                : 'bg-red-100 text-red-600'}
-            `}>
-              {value}
-            </span>
-          </div>
-        )
-      })}
+
+      {recommendations.map((rec, i) => (
+        <div
+          key={i}
+          className="p-4 rounded-xl bg-[hsl(var(--soft))] border border-[hsl(var(--border))]"
+        >
+          <p className="text-sm text-[hsl(var(--foreground))]">
+            {rec.text}
+          </p>
+        </div>
+      ))}
     </div>
   )
 }

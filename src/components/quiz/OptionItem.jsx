@@ -10,10 +10,10 @@ export default function OptionItem({
     'w-full text-left px-4 py-3 rounded-xl border-2 transition-all duration-150'
 
   const activeStyle =
-    'border-green-500 bg-green-50 text-green-800'
+    'border-[hsl(var(--primary))] bg-[hsl(var(--soft))] text-[hsl(var(--foreground))]'
 
   const inactiveStyle =
-    'border-gray-200 bg-white hover:border-green-300 hover:bg-green-50/40 text-gray-700'
+    'border-gray-200 bg-white hover:border-[hsl(var(--primary))] hover:bg-gray-300/20 text-gray-700'
 
   const indicatorShape = isMulti ? 'rounded-sm' : 'rounded-full'
 
@@ -26,7 +26,7 @@ export default function OptionItem({
           className={`
             mt-0.5 shrink-0 w-4 h-4 border-2 flex items-center justify-center
             ${indicatorShape}
-            ${selected ? 'border-green-500 bg-green-500' : 'border-gray-300'}
+            ${selected? 'border-[hsl(var(--primary))] bg-[hsl(var(--primary))]': 'border-[hsl(var(--border))]'}
           `}
         >
           {selected && (
