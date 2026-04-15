@@ -6,7 +6,7 @@ export default function ResultCard({ tingkatKesiapan }) {
   const isGood = ['sangat_layak', 'layak']
 
   return (
-    <div className={`p-6 rounded-2xl border ${meta.bgClass}`}>
+    <div className={`p-6 rounded-2xl shadow-xs ${meta.bgClass}`}>
       
       <img src={isGood.includes(tingkatKesiapan) ? './happy.png' : './sad.png'} alt={isGood.includes(tingkatKesiapan) ? 'Happy' : 'Sad'} className="w-64 h-auto mx-auto" />
 

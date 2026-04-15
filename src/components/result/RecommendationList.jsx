@@ -30,7 +30,7 @@ export default function RecommendationList({ trace }) {
       {recommendations.map((rec, i) => (
         <div
           key={i}
-          className="p-4 rounded-xl bg-[hsl(var(--soft))] border border-[hsl(var(--border))]"
+          className="p-4 rounded-xl bg-[hsl(var(--soft))] shadow-sm"
         >
           <p className="text-sm text-[hsl(var(--foreground))]">
             {rec.text}

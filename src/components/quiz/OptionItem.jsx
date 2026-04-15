@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion'
+
 export default function OptionItem({
   option,
   selected,
@@ -18,7 +20,12 @@ export default function OptionItem({
   const indicatorShape = isMulti ? 'rounded-sm' : 'rounded-full'
 
   return (
-    <button onClick={onClick} className={`${baseStyle} ${selected ? activeStyle : inactiveStyle}`}>
+    <motion.button
+      whileTap={{ scale: 0.97 }}
+      whileHover={{ scale: 1.01 }}
+      onClick={onClick}
+      className={`${baseStyle} ${selected ? activeStyle : inactiveStyle}`}
+    >
       <div className="flex items-start gap-3">
 
         {/* Indicator */}
@@ -51,6 +58,6 @@ export default function OptionItem({
           )}
         </div>
       </div>
-    </button>
+    </motion.button>
   )
 }

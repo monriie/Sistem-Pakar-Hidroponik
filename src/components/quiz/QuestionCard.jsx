@@ -1,3 +1,4 @@
+import { motion, AnimatePresence } from 'framer-motion'
 import OptionItem from './OptionItem'
 
 export default function QuestionCard({
@@ -22,34 +23,43 @@ export default function QuestionCard({
   }
 
   const isSelected = (optionId) => {
-    if (isMulti) {
-      return currentAnswer?.includes(optionId)
-    }
+    if (isMulti) return currentAnswer?.includes(optionId)
     return currentAnswer === optionId
   }
 
   return (
-    <div className="space-y-4">
-      <div>
-        <p className="text-lg font-semibold text-gray-800">
-          {question.question}
-        </p>
-        {question.hint && (
-          <p className="text-sm text-gray-400">{question.hint}</p>
-        )}
-      </div>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={question.id}
+        initial={{ opacity: 0, x: 30 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -30 }}
+        transition={{ duration: 0.25 }}
+        className="space-y-4"
+      >
+        <div>
+          <p className="text-lg font-semibold">
+            {question.question}
+          </p>
+          {question.hint && (
+            <p className="text-sm text-gray-400">
+              {question.hint}
+            </p>
+          )}
+        </div>
 
-      <div className="space-y-2">
-        {question.options.map((opt) => (
-          <OptionItem
-            key={opt.id}
-            option={opt}
-            type={question.type}
-            selected={isSelected(opt.id)}
-            onClick={() => handleClick(opt.id)}
-          />
-        ))}
-      </div>
-    </div>
+        <div className="space-y-2">
+          {question.options.map((opt) => (
+            <OptionItem
+              key={opt.id}
+              option={opt}
+              type={question.type}
+              selected={isSelected(opt.id)}
+              onClick={() => handleClick(opt.id)}
+            />
+          ))}
+        </div>
+      </motion.div>
+    </AnimatePresence>
   )
 }

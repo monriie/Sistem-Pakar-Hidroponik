@@ -50,9 +50,9 @@ export const FACTOR_META = {
   alat: {
     label: 'Alat Dasar',
     display: {
-      lengkap:  { label: 'Lengkap',   statusClass: 'text-emerald-600', dot: 'bg-emerald-500' },
-      sebagian: { label: 'Sebagian',  statusClass: 'text-amber-600',   dot: 'bg-amber-500'   },
-      tidak:    { label: 'Tidak Ada', statusClass: 'text-rose-600',    dot: 'bg-rose-500'    },
+      lengkap:  { label: 'Lengkap', dot: 'bg-emerald-500' , badgeClass: 'bg-emerald-100 text-emerald-600'},
+      sebagian: { label: 'Sebagian', dot: 'bg-amber-500'   , badgeClass: 'bg-amber-100 text-amber-600'},
+      tidak:    { label: 'Tidak Ada', dot: 'bg-rose-500'    , badgeClass: 'bg-rose-100 text-rose-600'},
     },
     recommendations: {
       sebagian: 'Lengkapi alat utama: pastikan kamu memiliki TDS Meter dan PH Meter. Tambahkan minimal 3 alat pendukung (Box Styrofoam, Netpot, Tray Semai, Rockwool/Cocopeat, atau Kain Flanel).',
@@ -62,8 +62,8 @@ export const FACTOR_META = {
   nutrisi: {
     label: 'Nutrisi',
     display: {
-      siap:  { label: 'Siap',   statusClass: 'text-emerald-600', dot: 'bg-emerald-500' },
-      tidak: { label: 'Belum Siap', statusClass: 'text-rose-600',    dot: 'bg-rose-500'    },
+      siap:  { label: 'Siap', badgeClass: 'bg-emerald-100 text-emerald-600', dot: 'bg-emerald-500' },
+      tidak: { label: 'Belum Siap', badgeClass: 'bg-rose-100 text-rose-600',    dot: 'bg-rose-500'    },
     },
     recommendations: {
       tidak: 'Siapkan nutrisi hidroponik (AB-Mix atau jenis lain, organik/anorganik). Pelajari takaran pencampuran yang tepat — untuk AB-Mix: 5ml larutan A + 5ml larutan B per 1 liter air.',
@@ -72,8 +72,8 @@ export const FACTOR_META = {
   ph: {
     label: 'pH Air',
     display: {
-      sesuai:       { label: 'Sesuai',       statusClass: 'text-emerald-600', dot: 'bg-emerald-500' },
-      tidak_sesuai: { label: 'Tidak Sesuai', statusClass: 'text-rose-600',    dot: 'bg-rose-500'    },
+      sesuai:       { label: 'Sesuai',       badgeClass: 'bg-emerald-100 text-emerald-600', dot: 'bg-emerald-500' },
+      tidak_sesuai: { label: 'Tidak Sesuai', badgeClass: 'bg-rose-100 text-rose-600',    dot: 'bg-rose-500'    },
     },
     recommendations: {
       tidak_sesuai: 'Jaga pH air pada rentang 5,5–6,5 menggunakan pH meter. pH di luar rentang ini menyebabkan akar busuk, batang busuk, dan daun menguning. Gunakan pH Up / pH Down untuk koreksi.',
@@ -82,8 +82,8 @@ export const FACTOR_META = {
   cahaya: {
     label: 'Cahaya Matahari',
     display: {
-      cukup: { label: 'Cukup',    statusClass: 'text-emerald-600', dot: 'bg-emerald-500' },
-      tidak:  { label: 'Kurang',  statusClass: 'text-rose-600',    dot: 'bg-rose-500'    },
+      cukup: { label: 'Cukup',    badgeClass: 'bg-emerald-100 text-emerald-600', dot: 'bg-emerald-500' },
+      tidak:  { label: 'Kurang',  badgeClass: 'bg-rose-100 text-rose-600',    dot: 'bg-rose-500'    },
     },
     recommendations: {
       tidak: 'Pindahkan instalasi ke lokasi yang mendapat sinar matahari langsung atau tidak langsung yang memadai. Lokasi outdoor atau greenhouse sangat disarankan. Tanaman kekurangan cahaya akan tumbuh kurus dan tidak produktif.',
@@ -92,8 +92,8 @@ export const FACTOR_META = {
   pestisida: {
     label: 'Pengendalian Hama',
     display: {
-      pakai: { label: 'Siap',       statusClass: 'text-emerald-600', dot: 'bg-emerald-500' },
-      tidak:  { label: 'Belum Siap', statusClass: 'text-amber-600',   dot: 'bg-amber-500'   },
+      pakai: { label: 'Siap',       badgeClass: 'bg-emerald-100 text-emerald-600', dot: 'bg-emerald-500' },
+      tidak:  { label: 'Belum Siap', badgeClass: 'bg-amber-100 text-amber-600',   dot: 'bg-amber-500'   },
     },
     recommendations: {
       tidak: 'Siapkan pestisida nabati atau kimia sebagai langkah antisipasi hama (kutu daun, jamur, dll). Penanganan dini jauh lebih efektif dan hemat dibanding menunggu serangan meluas.',

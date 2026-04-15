@@ -60,7 +60,7 @@ const useExpertSystem = () => {
     if (isLastQuestion) {
       const evaluated = runExpertSystem(answers, QUESTIONS)
       setResult(evaluated)
-      navigate('/result', { state: { result: evaluated, answers } })
+      // navigate('/result', { state: { result: evaluated, answers } })
       return
     }
 

@@ -43,7 +43,7 @@ export default function FactorList({ trace, answers }) {
         return (
           <div
             key={key}
-            className="p-4 rounded-xl border bg-white space-y-1"
+            className="p-4 rounded-xl shadow-sm bg-white space-y-1"
           >
             {/* Header */}
             <div className="flex justify-between items-center">
@@ -52,7 +52,13 @@ export default function FactorList({ trace, answers }) {
                 <span className="font-medium">{meta.label}</span>
               </div>
 
-              <span className={`text-sm ${display.statusClass}`}>
+              <span
+                className={`
+                  px-3 py-1 text-xs rounded-full font-medium
+                  ${display.badgeClass}
+                  bg-opacity-10
+                `}
+              >
                 {display.label}
               </span>
             </div>

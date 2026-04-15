@@ -9,12 +9,12 @@ export default function QuizContainer({
   answers,
   canProceed,
   isLastQuestion,
-  onAnswer,
-  onNext,
-  onPrev,
+  handleAnswer,
+  handleNext,
+  handleBack,
 }) {
   return (
-    <div className="max-w-xl mx-auto px-4 py-8 space-y-6">
+    <div className="max-w-2xl mx-auto px-2 py-8 space-y-6">
 
       {/* PROFILE BULAT */}
       <div className="flex justify-center">
@@ -31,24 +31,24 @@ export default function QuizContainer({
         <QuestionCard
           question={currentQuestion}
           currentAnswer={answers[currentQuestion.id]}
-          onAnswer={onAnswer}
+          onAnswer={handleAnswer}
         />
       </div>
 
       {/* Navigation */}
       <div className="flex justify-between">
         <Button
-          onClick={onPrev}
+          onClick={handleBack}
           disabled={currentIndex === 0}
-          className="btn-secondary"
+          className="text-base text-gray-500 hover:text-gray-800 disabled:text-gray-500"
         >
           ← Kembali
         </Button>
 
         <Button
-          onClick={onNext}
+          onClick={handleNext}
           disabled={!canProceed}
-          className="btn-primary"
+          className="text-base text-gray-500 hover:text-[hsl(var(--foreground))] disabled:text-gray-500"
         >
           {isLastQuestion ? 'Lihat Hasil →' : 'Lanjut →'}
         </Button>
