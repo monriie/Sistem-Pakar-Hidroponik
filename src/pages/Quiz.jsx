@@ -1,28 +1,33 @@
-import QuizContainer from '../components/quiz/QuizContainer.jsx'
+import QuizContainer from '@/components/quiz/QuizContainer'
+import useExpertSystem from '@/hooks/useExpertSystem'
+import { QUESTIONS } from '@/data/questions'
 
-export default function QuizPage({
-  currentQuestion,
-  currentIndex,
-  totalQuestions,
-  answers,
-  isAnswered,
-  isLastQuestion,
-  onAnswer,
-  onNext,
-  onPrev,
-}) {
+export default function QuizPage() {
+  const {
+    currentIndex,
+    currentQuestion,
+    answers,
+    isLastQuestion,
+    handleAnswer,
+    handleNext,
+    handleBack,
+    canProceed,
+  } = useExpertSystem()
+
+  if (!currentQuestion) return null
+
   return (
     <div className="min-h-screen bg-gray-50">
       <QuizContainer
         currentQuestion={currentQuestion}
         currentIndex={currentIndex}
-        totalQuestions={totalQuestions}
+        totalQuestions={QUESTIONS.length}
         answers={answers}
-        isAnswered={isAnswered}
+        canProceed={canProceed}
         isLastQuestion={isLastQuestion}
-        onAnswer={onAnswer}
-        onNext={onNext}
-        onPrev={onPrev}
+        onAnswer={handleAnswer}
+        onNext={handleNext}
+        onPrev={handleBack}
       />
     </div>
   )

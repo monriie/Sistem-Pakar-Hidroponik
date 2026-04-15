@@ -1,72 +1,96 @@
 import { useState, useCallback } from 'react'
-import { QUESTIONS } from '../data/questions.js'
-import { evaluate } from '../engine/forwardChaining.js'
+import { useNavigate } from 'react-router'
+import { QUESTIONS } from '@/data/questions'
+import { runExpertSystem } from '@/engine/expertSystem'
 
-const TOTAL = QUESTIONS.length
+const INITIAL_ANSWERS = {
+  alat:      [],
+  nutrisi:   null,
+  ph:        null,
+  cahaya:    null,
+  pestisida: null,
+}
 
-export function useExpertSystem() {
-  const [currentIndex, setCurrentIndex]  = useState(0)
-  const [answers, setAnswers]            = useState({})   // { [question.id]: value }
-  const [result, setResult]              = useState(null)
-  const [error, setError]                = useState(null)
+/**
+ * Custom hook yang mengelola seluruh state kuis dan menjalankan expert system.
+ *
+ * @returns {{
+ *   currentIndex:  number,
+ *   currentQuestion: import('../data/questions').Question,
+ *   answers:       typeof INITIAL_ANSWERS,
+ *   isLastQuestion: boolean,
+ *   handleAnswer:  (value: string) => void,
+ *   handleNext:    () => void,
+ *   handleBack:    () => void,
+ *   canProceed:    boolean,
+ *   result:        import('../engine/expertSystem').EvaluationResult | null,
+ *   resetQuiz:     () => void,
+ * }}
+ */
+const useExpertSystem = () => {
+  const navigate = useNavigate()
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [answers, setAnswers] = useState(INITIAL_ANSWERS)
+  const [result, setResult] = useState(null)
 
-  const currentQuestion = QUESTIONS[currentIndex]
-  const isLastQuestion  = currentIndex === TOTAL - 1
-  const progress        = Math.round(((currentIndex) / TOTAL) * 100)
+  const currentQuestion  = QUESTIONS[currentIndex]
+  const isLastQuestion   = currentIndex === QUESTIONS.length - 1
 
-  // Simpan jawaban untuk soal sekarang
-  const setAnswer = useCallback((questionId, value) => {
-    setAnswers((prev) => ({ ...prev, [questionId]: value }))
-  }, [])
+  /** Cek apakah pertanyaan saat ini sudah dijawab */
+  const canProceed = (() => {
+    const { id, type } = currentQuestion
+    if (type === 'multi') return (answers[id] ?? []).length > 0
+    return answers[id] !== null
+  })()
 
-  // Lanjut ke soal berikutnya atau langsung evaluasi jika soal terakhir
-  const next = useCallback(() => {
+  /**
+   * Handle pilihan jawaban.
+   * Multi → toggle item di array; Single → simpan langsung.
+   */
+  const handleAnswer = useCallback((questionId, value) => {
+  setAnswers((prev) => ({
+    ...prev,
+    [questionId]: value,
+  }))
+}, [])
+
+  const handleNext = useCallback(() => {
+    if (!canProceed) return
+
     if (isLastQuestion) {
-      try {
-        const output = evaluate(answers)
-        setResult(output)
-      } catch (e) {
-        setError(e.message)
-      }
-    } else {
-      setCurrentIndex((i) => i + 1)
+      const evaluated = runExpertSystem(answers, QUESTIONS)
+      setResult(evaluated)
+      navigate('/result', { state: { result: evaluated, answers } })
+      return
     }
-  }, [isLastQuestion, answers])
 
-  // Kembali ke soal sebelumnya
-  const prev = useCallback(() => {
-    if (currentIndex > 0) setCurrentIndex((i) => i - 1)
-  }, [currentIndex])
+    setCurrentIndex((prev) => prev + 1)
+  }, [canProceed, isLastQuestion, answers, navigate])
 
-  // Reset semua state ke awal
-  const reset = useCallback(() => {
+  const handleBack = useCallback(() => {
+    if (currentIndex > 0) setCurrentIndex((prev) => prev - 1)
+    else navigate('/')
+  }, [currentIndex, navigate])
+
+  const resetQuiz = useCallback(() => {
     setCurrentIndex(0)
-    setAnswers({})
+    setAnswers(INITIAL_ANSWERS)
     setResult(null)
-    setError(null)
-  }, [])
-
-  // Cek apakah soal sekarang sudah dijawab (untuk enable/disable tombol Next)
-  const currentAnswer = answers[currentQuestion?.id]
-  const isAnswered = currentQuestion?.type === 'multi_select'
-    ? Array.isArray(currentAnswer) && currentAnswer.length > 0
-    : currentAnswer !== undefined
+    navigate('/quiz')
+  }, [navigate])
 
   return {
-    // state
-    currentQuestion,
     currentIndex,
+    currentQuestion,
     answers,
-    result,
-    error,
-    progress,
     isLastQuestion,
-    isAnswered,
-    totalQuestions: TOTAL,
-    // actions
-    setAnswer,
-    next,
-    prev,
-    reset,
+    handleAnswer,
+    handleNext,
+    handleBack,
+    canProceed,
+    result,
+    resetQuiz,
   }
 }
+
+export default useExpertSystem

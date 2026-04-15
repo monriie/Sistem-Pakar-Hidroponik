@@ -199,9 +199,84 @@ body {
 }
 
 @layer base {
+  :root {
+    --background: 60 9% 97%;
+    --foreground: 150 10% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 150 10% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 150 10% 10%;
+
+    --primary: 152 60% 30%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 152 20% 92%;
+    --secondary-foreground: 152 40% 20%;
+
+    --muted: 60 5% 93%;
+    --muted-foreground: 150 8% 42%;
+
+    --accent: 78 55% 45%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 150 12% 88%;
+    --input: 150 12% 88%;
+    --ring: 152 60% 30%;
+
+    --radius: 0.75rem;
+  }
+
   * {
-    @apply border-border outline-ring/50;}
+    @apply border-border;
+  }
+
   body {
-    @apply bg-background text-foreground;}
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+
   html {
-    @apply font-sans;}}
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-in-up {
+    animation: slideInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .animate-in-fade {
+    animation: fadeIn 0.3s ease both;
+  }
+
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .stagger-1 { animation-delay: 0.05s; }
+  .stagger-2 { animation-delay: 0.10s; }
+  .stagger-3 { animation-delay: 0.15s; }
+  .stagger-4 { animation-delay: 0.20s; }
+  .stagger-5 { animation-delay: 0.25s; }
+}

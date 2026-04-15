@@ -1,48 +1,52 @@
-import OptionItem from './OptionItem.jsx'
+import OptionItem from './OptionItem'
 
-export default function QuestionCard({ question, currentAnswer, onAnswer }) {
-  const isMulti = question.type === 'multi_select'
+export default function QuestionCard({
+  question,
+  currentAnswer,
+  onAnswer,
+}) {
+  const isMulti = question.type === 'multi'
 
-  function handleOptionClick(optionValue, optionIndex) {
+  const handleClick = (optionId) => {
     if (isMulti) {
-      // Toggle nilai dalam array (pakai index karena value bisa duplikat di nutrisi/ph)
       const prev = Array.isArray(currentAnswer) ? currentAnswer : []
-      const next = prev.includes(optionValue)
-        ? prev.filter((v) => v !== optionValue)
-        : [...prev, optionValue]
+
+      const next = prev.includes(optionId)
+        ? prev.filter((v) => v !== optionId)
+        : [...prev, optionId]
+
       onAnswer(question.id, next)
     } else {
-      // Single select: simpan value langsung
-      onAnswer(question.id, optionValue)
+      onAnswer(question.id, optionId)
     }
   }
 
-  function isSelected(optionValue, optionIndex) {
+  const isSelected = (optionId) => {
     if (isMulti) {
-      return Array.isArray(currentAnswer) && currentAnswer.includes(optionValue)
+      return currentAnswer?.includes(optionId)
     }
-    return currentAnswer === optionValue
+    return currentAnswer === optionId
   }
 
   return (
     <div className="space-y-4">
       <div>
-        <p className="text-lg font-semibold text-gray-800 leading-snug">
-          {question.text}
+        <p className="text-lg font-semibold text-gray-800">
+          {question.question}
         </p>
         {question.hint && (
-          <p className="text-sm text-gray-400 mt-1">{question.hint}</p>
+          <p className="text-sm text-gray-400">{question.hint}</p>
         )}
       </div>
 
       <div className="space-y-2">
-        {question.options.map((option, idx) => (
+        {question.options.map((opt) => (
           <OptionItem
-            key={idx}
-            option={option}
+            key={opt.id}
+            option={opt}
             type={question.type}
-            selected={isSelected(option.value, idx)}
-            onClick={() => handleOptionClick(option.value, idx)}
+            selected={isSelected(opt.id)}
+            onClick={() => handleClick(opt.id)}
           />
         ))}
       </div>

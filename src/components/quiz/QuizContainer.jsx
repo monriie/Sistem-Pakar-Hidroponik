@@ -1,12 +1,12 @@
-import QuestionCard from './QuestionCard.jsx'
-import ProgressBar from './ProgressBar.jsx'
+import QuestionCard from './QuestionCard'
+import ProgressBar from './ProgressBar'
 
 export default function QuizContainer({
   currentQuestion,
   currentIndex,
   totalQuestions,
   answers,
-  isAnswered,
+  canProceed,
   isLastQuestion,
   onAnswer,
   onNext,
@@ -16,7 +16,7 @@ export default function QuizContainer({
     <div className="max-w-xl mx-auto px-4 py-8 space-y-6">
       <ProgressBar current={currentIndex + 1} total={totalQuestions} />
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+      <div className="bg-white rounded-2xl border p-6">
         <QuestionCard
           question={currentQuestion}
           currentAnswer={answers[currentQuestion.id]}
@@ -24,24 +24,19 @@ export default function QuizContainer({
         />
       </div>
 
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between">
         <button
           onClick={onPrev}
           disabled={currentIndex === 0}
-          className="px-5 py-2.5 rounded-xl text-sm font-medium text-gray-500
-                     hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed
-                     transition-colors"
+          className="btn-secondary"
         >
           ← Kembali
         </button>
 
         <button
           onClick={onNext}
-          disabled={!isAnswered}
-          className="px-6 py-2.5 rounded-xl text-sm font-semibold text-white
-                     bg-green-500 hover:bg-green-600 active:bg-green-700
-                     disabled:opacity-40 disabled:cursor-not-allowed
-                     transition-colors"
+          disabled={!canProceed}
+          className="btn-primary"
         >
           {isLastQuestion ? 'Lihat Hasil →' : 'Lanjut →'}
         </button>

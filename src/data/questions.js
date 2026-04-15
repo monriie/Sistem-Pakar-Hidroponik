@@ -1,98 +1,147 @@
+/**
+ * @typedef {Object} Option
+ * @property {string} id      - unique key untuk option ini
+ * @property {string} label   - teks yang ditampilkan ke user
+ * @property {string} value   - nilai internal untuk engine
+ */
+
+/**
+ * @typedef {Object} Question
+ * @property {string}   id          - identifier soal (alat, nutrisi, ph, cahaya, pestisida)
+ * @property {number}   order       - urutan soal (1-5)
+ * @property {string}   category    - label kategori
+ * @property {string}   question    - teks pertanyaan
+ * @property {string}   hint        - sub-teks / petunjuk
+ * @property {'single'|'multi'} type - jenis input
+ * @property {Option[]} options     - daftar pilihan
+ */
+
+/** @type {Question[]} */
 export const QUESTIONS = [
   {
-    id: 'alat_dasar',
-    type: 'multi_select',
-    text: 'Alat apa saja yang sudah kamu miliki saat ini?',
-    hint: 'Pilih semua yang kamu punya',
+    id: 'alat',
+    order: 1,
+    category: 'Alat Dasar',
+    question: 'Alat apa saja yang sudah kamu miliki saat ini?',
+    hint: 'Boleh pilih lebih dari satu',
+    type: 'multi',
     options: [
-      { value: 'tds_meter',   label: 'TDS Meter' },
-      { value: 'ph_meter',    label: 'PH Meter' },
-      { value: 'styrofoam',   label: 'Box Styrofoam' },
-      { value: 'netpot',      label: 'Netpot' },
-      { value: 'tray_semai',  label: 'Tray Semai' },
-      { value: 'rockwool',    label: 'Rockwool / Cocopeat' },
-      { value: 'kain_flanel', label: 'Kain Flanel' },
+      { id: 'tds',        label: 'TDS Meter',          value: 'tds' },
+      { id: 'ph_meter',   label: 'PH Meter',           value: 'ph_meter' },
+      { id: 'styrofoam',  label: 'Box Styrofoam',      value: 'styrofoam' },
+      { id: 'netpot',     label: 'Netpot',             value: 'netpot' },
+      { id: 'tray',       label: 'Tray Semai',         value: 'tray' },
+      { id: 'rockwool',   label: 'Rockwool / Cocopeat', value: 'rockwool' },
+      { id: 'flanel',     label: 'Kain Flanel',        value: 'flanel' },
     ],
   },
   {
     id: 'nutrisi',
-    type: 'single_select',
-    text: 'Bagaimana kondisi nutrisi (AB-Mix atau jenis lainnya) kamu saat ini?',
+    order: 2,
+    category: 'Nutrisi',
+    question: 'Bagaimana kondisi nutrisi (misalnya AB-Mix) kamu saat ini?',
     hint: 'Pilih satu jawaban',
+    type: 'single',
     options: [
       {
+        id: 'nutrisi_siap',
+        label: 'Punya nutrisi dan tahu cara mencampurnya',
+        sublabel: 'Contoh AB-Mix: 5ml A + 5ml B per liter air',
         value: 'siap',
-        label: 'Saya punya nutrisi dan tahu cara mencampurnya',
-        sublabel: 'contoh: AB-Mix 5ml A + 5ml B per liter air',
       },
       {
+        id: 'nutrisi_punya_tidak_tahu',
+        label: 'Punya nutrisi tapi belum tahu cara mencampurnya',
         value: 'tidak',
-        label: 'Saya punya nutrisi tapi belum tahu cara mencampurnya',
       },
       {
+        id: 'nutrisi_tidak_punya',
+        label: 'Belum punya nutrisi sama sekali',
         value: 'tidak',
-        label: 'Saya belum punya nutrisi sama sekali',
       },
     ],
   },
   {
-    id: 'ph_air',
-    type: 'single_select',
-    text: 'Berapa kisaran pH air yang kamu gunakan saat ini?',
+    id: 'ph',
+    order: 3,
+    category: 'pH Air',
+    question: 'Berapa kisaran pH air yang kamu gunakan saat ini?',
     hint: 'Pilih satu jawaban',
+    type: 'single',
     options: [
       {
+        id: 'ph_sesuai',
+        label: 'pH 5,5 – 6,5',
+        sublabel: 'Diukur dengan alat',
         value: 'sesuai',
-        label: 'pH 5,5 – 6,5 dan saya ukur dengan alat',
       },
       {
-        value: 'tidak_sesuai',
+        id: 'ph_luar',
         label: 'pH di luar rentang 5,5 – 6,5',
+        value: 'tidak_sesuai',
       },
       {
+        id: 'ph_belum',
+        label: 'Belum pernah mengukur pH air',
         value: 'tidak_sesuai',
-        label: 'Saya belum pernah mengukur pH air',
       },
     ],
   },
   {
     id: 'cahaya',
-    type: 'single_select',
-    text: 'Bagaimana kondisi cahaya matahari di lokasi instalasi hidroponik kamu?',
+    order: 4,
+    category: 'Cahaya Matahari',
+    question: 'Bagaimana kondisi cahaya matahari di lokasi instalasi hidroponik kamu?',
     hint: 'Pilih satu jawaban',
+    type: 'single',
     options: [
       {
+        id: 'cahaya_outdoor',
+        label: 'Di luar ruangan (outdoor)',
+        sublabel: 'Baik beratap maupun tidak beratap',
         value: 'cukup',
-        label: 'Di luar ruangan (outdoor), beratap maupun tidak',
       },
       {
+        id: 'cahaya_greenhouse',
+        label: 'Di dalam greenhouse',
+        sublabel: 'Bukan di dalam rumah / gedung',
         value: 'cukup',
-        label: 'Di dalam greenhouse (bukan di dalam rumah/gedung)',
       },
       {
+        id: 'cahaya_redup',
+        label: 'Di dalam ruangan dengan cahaya redup',
+        sublabel: 'Rumah / gedung',
         value: 'tidak',
-        label: 'Di dalam ruangan (rumah/gedung) dengan cahaya redup',
       },
       {
+        id: 'cahaya_gelap',
+        label: 'Di dalam ruangan tanpa cahaya matahari sama sekali',
+        sublabel: 'Rumah / gedung',
         value: 'tidak',
-        label: 'Di dalam ruangan (rumah/gedung) tanpa cahaya matahari sama sekali',
       },
     ],
   },
   {
     id: 'pestisida',
-    type: 'single_select',
-    text: 'Jika terjadi serangan hama, apa rencana pengendalian yang kamu siapkan?',
+    order: 5,
+    category: 'Pengendalian Hama',
+    question: 'Jika terjadi serangan hama, apa rencana pengendalian yang kamu siapkan?',
     hint: 'Pilih satu jawaban',
+    type: 'single',
     options: [
       {
+        id: 'pestisida_pakai',
+        label: 'Sudah siapkan pestisida sebagai langkah pengendalian',
+        sublabel: 'Kimia atau nabati',
         value: 'pakai',
-        label: 'Sudah siapkan pestisida (kimia / nabati) sebagai langkah pengendalian',
       },
       {
-        value: 'tidak',
+        id: 'pestisida_tidak',
         label: 'Belum menyiapkan apapun untuk pengendalian hama',
+        value: 'tidak',
       },
     ],
   },
 ]
+
+export const TOTAL_QUESTIONS = QUESTIONS.length
