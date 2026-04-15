@@ -4,11 +4,11 @@ export default function RecommendationList({ trace }) {
   if (!trace) return null
 
   const items = [
-    { key: 'alat', value: trace.input_classified.alat_dasar },
-    { key: 'nutrisi', value: trace.input_classified.nutrisi },
-    { key: 'ph', value: trace.input_classified.ph_air },
-    { key: 'cahaya', value: trace.input_classified.cahaya },
-    { key: 'pestisida', value: trace.input_classified.pestisida },
+    { key: 'alat', value: trace.classifiedAlat },
+    { key: 'nutrisi', value: trace.classifiedNutrisi },
+    { key: 'ph', value: trace.classifiedPh },
+    { key: 'cahaya', value: trace.classifiedCahaya },
+    { key: 'pestisida', value: trace.classifiedPestisida },
   ]
 
   const recommendations = items
