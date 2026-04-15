@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { useExpertSystem } from './hooks/useExpertSystem.js'
-import HomePage   from './pages/HomePage.jsx'
-import QuizPage   from './pages/QuizPage.jsx'
-import ResultPage from './pages/ResultPage.jsx'
+import { useExpertSystem } from '@/hooks/useExpertSystem.js'
+import HomePage   from '@/pages/Home.jsx'
+import QuizPage   from '@/pages/Quiz.jsx'
+import ResultPage from '@/pages/Result.jsx'
 
 export default function App() {
   const [page, setPage] = useState('home')  // 'home' | 'quiz' | 'result'
