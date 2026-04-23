@@ -86,7 +86,7 @@ export default function FactorList({ trace, answers }) {
             <div className="flex justify-between items-center">
 
               <div className="flex items-center gap-2">
-                <span className="font-medium text-sm">
+                <span className="font-medium text-xs">
                   {meta.label}
                 </span>
               </div>
