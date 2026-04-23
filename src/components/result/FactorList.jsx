@@ -91,10 +91,6 @@ export default function FactorList({ trace, answers }) {
             <div className="flex justify-between items-center">
 
               <div className="flex items-center gap-2">
-                <span
-                  className={`w-2 h-2 rounded-full ${display.dot}`}
-                />
-
                 <span className="font-medium">
                   {meta.label}
                 </span>
@@ -118,8 +114,7 @@ export default function FactorList({ trace, answers }) {
                     px-2.5 py-1
                     rounded-full
                     border
-                    text-[11px]
-                    font-mono
+                    text-xs
                     font-semibold
                     ${getCFStyle(cf)}
                   `}

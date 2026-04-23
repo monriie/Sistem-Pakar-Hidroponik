@@ -6,10 +6,10 @@ import { motion } from 'framer-motion'
 const getCFPhrase = (cf) => {
   if (cf >= 1.0) return 'Definitely'
   if (cf >= 0.8) return 'Almost Certainly'
-  if (cf >= 0.6) return 'Probably'
-  if (cf >= 0.4) return 'Maybe'
-  if (cf >= 0.2) return 'Unknown'
-  return 'No Confidence'
+  if (cf >= 0.6) return 'Probably Yes'
+  if (cf >= 0.4) return 'Probably'
+  if (cf >= 0.2) return 'Maybe'
+  return 'Defenitely Not'
 }
 
 function Divider() {
