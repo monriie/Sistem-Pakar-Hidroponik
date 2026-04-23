@@ -64,11 +64,6 @@ export default function FactorList({ trace, answers }) {
 
   return (
     <div className="space-y-2.5">
-
-      <h3 className="font-semibold text-[hsl(var(--foreground))]">
-        Rincian Faktor
-      </h3>
-
       {items.map(({ key, value, cf }) => {
 
         const meta = FACTOR_META[key]
