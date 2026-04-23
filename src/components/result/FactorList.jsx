@@ -2,6 +2,7 @@ import { FACTOR_META } from '@/data/result'
 import { QUESTIONS } from '@/data/questions'
 
 export default function FactorList({ trace, answers }) {
+
   const getQuestion = (id) =>
     QUESTIONS.find((q) => q.id === id)
 
@@ -20,20 +21,56 @@ export default function FactorList({ trace, answers }) {
   }
 
   const items = [
-    { key: 'alat', value: trace.classifiedAlat },
-    { key: 'nutrisi', value: trace.classifiedNutrisi },
-    { key: 'ph', value: trace.classifiedPh },
-    { key: 'cahaya', value: trace.classifiedCahaya },
-    { key: 'pestisida', value: trace.classifiedPestisida },
+    {
+      key:'alat',
+      value:trace.classifiedAlat,
+      cf:trace.cfAlat
+    },
+    {
+      key:'nutrisi',
+      value:trace.classifiedNutrisi,
+      cf:trace.cfNutrisi
+    },
+    {
+      key:'ph',
+      value:trace.classifiedPh,
+      cf:trace.cfPh
+    },
+    {
+      key:'cahaya',
+      value:trace.classifiedCahaya,
+      cf:trace.cfCahaya
+    },
+    {
+      key:'pestisida',
+      value:trace.classifiedPestisida,
+      cf:trace.cfPestisida
+    },
   ]
+
+
+  const getCFStyle = (cf) => {
+    if (cf >= 0.8)
+      return 'bg-emerald-50 text-emerald-700 border-emerald-200'
+
+    if (cf >= 0.6)
+      return 'bg-teal-50 text-teal-700 border-teal-200'
+
+    if (cf >= 0.4)
+      return 'bg-amber-50 text-amber-700 border-amber-200'
+
+    return 'bg-gray-50 text-gray-600 border-gray-200'
+  }
 
   return (
     <div className="space-y-2.5">
+
       <h3 className="font-semibold text-[hsl(var(--foreground))]">
         Rincian Faktor
       </h3>
 
-      {items.map(({ key, value }) => {
+      {items.map(({ key, value, cf }) => {
+
         const meta = FACTOR_META[key]
         const display = meta.display[value]
         const detail = getAnswerLabel(key, answers[key])
@@ -43,30 +80,63 @@ export default function FactorList({ trace, answers }) {
         return (
           <div
             key={key}
-            className="p-4 rounded-xl shadow-sm bg-white space-y-1"
+            className="
+              p-4 rounded-xl
+              shadow-sm bg-white
+              space-y-2
+            "
           >
-            {/* Header */}
+
+            {/* HEADER */}
             <div className="flex justify-between items-center">
+
               <div className="flex items-center gap-2">
-                <span className={`w-2 h-2 rounded-full ${display.dot}`} />
-                <span className="font-medium">{meta.label}</span>
+                <span
+                  className={`w-2 h-2 rounded-full ${display.dot}`}
+                />
+
+                <span className="font-medium">
+                  {meta.label}
+                </span>
               </div>
 
-              <span
-                className={`
-                  px-3 py-1 text-xs rounded-full font-medium
-                  ${display.badgeClass}
-                  bg-opacity-10
-                `}
-              >
-                {display.label}
-              </span>
+
+              {/* status + CF badge */}
+              <div className="flex items-center gap-2">
+
+                <span
+                  className={`
+                    px-3 py-1 text-xs rounded-full font-medium
+                    ${display.badgeClass}
+                  `}
+                >
+                  {display.label}
+                </span>
+
+                <span
+                  className={`
+                    px-2.5 py-1
+                    rounded-full
+                    border
+                    text-[11px]
+                    font-mono
+                    font-semibold
+                    ${getCFStyle(cf)}
+                  `}
+                >
+                  CF {cf.toFixed(2)}
+                </span>
+
+              </div>
+
             </div>
 
-            {/* DETAIL JAWABAN USER */}
+
+            {/* DETAIL USER ANSWER */}
             <p className="text-xs text-gray-500">
               {detail || '-'}
             </p>
+
           </div>
         )
       })}

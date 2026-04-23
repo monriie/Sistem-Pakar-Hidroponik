@@ -33,7 +33,7 @@ export const READINESS_LEVELS = {
   },
   tidak_layak: {
     key: 'tidak_layak',
-    label: 'Belum Layak',
+    label: 'Tidak Layak',
     colorClass: 'text-rose-600',
     badgeVariant: 'destructive',
     bgClass: 'bg-rose-50 border-rose-200',

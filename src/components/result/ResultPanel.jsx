@@ -3,6 +3,7 @@ import ResultCard from './ResultCard'
 import FactorList from './FactorList'
 import RecommendationList from './RecommendationList'
 import Loading from '../ui/Loading'
+import CFBreakdown from './CFBreakdown'
 import { READINESS_LEVELS } from '@/data/result'
 
 export default function ResultPanel({
@@ -55,7 +56,14 @@ export default function ResultPanel({
           >
             <ResultCard tingkatKesiapan={result.tingkatKesiapan} />
 
-            <FactorList trace={result} answers={answers} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <CFBreakdown result={result} />
+
+              <FactorList
+                trace={result}
+                answers={answers}
+              />
+            </div>
 
             <RecommendationList trace={result} />
 
