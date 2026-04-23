@@ -119,7 +119,7 @@ export default function FactorList({ trace, answers }) {
                     ${getCFStyle(cf)}
                   `}
                 >
-                  CF {cf.toFixed(2)}
+                  CF {cf.toFixed(1)}
                 </span>
 
               </div>
