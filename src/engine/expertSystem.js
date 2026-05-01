@@ -200,7 +200,7 @@ const inferParameterLingkungan = (ph, cahaya) => {
   // B1 / B2: pH sesuai AND cahaya cukup (outdoor CF=1.0, greenhouse CF=0.8)
   const cfRule = CF_RULE.RS3_R1 // keduanya pakai CF_RULE 1.0
   const cfE    = Math.min(ph.cfEvidence, cahaya.cfEvidence)
-  const ruleId = cahaya.cfEvidence === 0.8 ? 'RS3-R2' : 'RS3-R1'
+  const ruleId = cahaya.cfEvidence === 0.9 ? 'RS3-R2' : 'RS3-R1'
   return {
     value:       'sesuai',
     cf:          +(cfE * cfRule).toFixed(4),
